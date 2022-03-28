@@ -38,7 +38,7 @@ public class NetworkClient {
             DispatchQueue.main.async {
                 completionHandler(data)
             }
-        }
+        }.resume()
     }
 
     // MARK: Network recording
