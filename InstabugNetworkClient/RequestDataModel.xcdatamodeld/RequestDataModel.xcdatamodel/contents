@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G314" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Request" representedClassName="Request" syncable="YES" codeGenerationType="class">
+        <attribute name="method" optional="YES" attributeType="String"/>
+        <attribute name="payloadBody" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="RequestRecord" representedClassName="RequestRecord" syncable="YES" codeGenerationType="class">
+        <relationship name="request" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Request"/>
+        <relationship name="response" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Response"/>
+    </entity>
+    <entity name="Response" representedClassName="Response" syncable="YES" codeGenerationType="class">
+        <attribute name="errorCode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="errorDomain" optional="YES" attributeType="String"/>
+        <attribute name="payloadBody" optional="YES" attributeType="String"/>
+        <attribute name="statusCode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="Request" positionX="-26.65692138671875" positionY="-10.98004150390625" width="128" height="74"/>
+        <element name="RequestRecord" positionX="-176.142333984375" positionY="-164.1522827148438" width="128" height="59"/>
+        <element name="Response" positionX="-326.8514404296875" positionY="-13.74734497070312" width="128" height="89"/>
+    </elements>
+</model>

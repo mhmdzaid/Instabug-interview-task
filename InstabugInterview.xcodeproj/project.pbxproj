@@ -19,6 +19,13 @@
 		24AA93CD25AF0F0D007588C7 /* InstabugNetworkClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AA93B825AF0F0D007588C7 /* InstabugNetworkClient.framework */; };
 		24AA93CE25AF0F0D007588C7 /* InstabugNetworkClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 24AA93B825AF0F0D007588C7 /* InstabugNetworkClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		24AA93D925AF0F24007588C7 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AA93D825AF0F24007588C7 /* NetworkClient.swift */; };
+		A0676CC627F3216200572AA7 /* DataStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CC527F3216200572AA7 /* DataStorageManager.swift */; };
+		A0676CC927F3222600572AA7 /* RequestDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0676CC727F3222600572AA7 /* RequestDataModel.xcdatamodeld */; };
+		A0676CCC27F3D37100572AA7 /* Data + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CCB27F3D37100572AA7 /* Data + Extension.swift */; };
+		A0676CCF27F3D3CD00572AA7 /* RequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CCE27F3D3CD00572AA7 /* RequestData.swift */; };
+		A0676CD127F3D3E800572AA7 /* URLSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD027F3D3E800572AA7 /* URLSessionResponse.swift */; };
+		A0676CD327F3D41900572AA7 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD227F3D41900572AA7 /* HTTPError.swift */; };
+		A0676CD527F3D4E300572AA7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD427F3D4E300572AA7 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +82,13 @@
 		24AA93C725AF0F0D007588C7 /* InstabugNetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstabugNetworkClientTests.swift; sourceTree = "<group>"; };
 		24AA93C925AF0F0D007588C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24AA93D825AF0F24007588C7 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		A0676CC527F3216200572AA7 /* DataStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageManager.swift; sourceTree = "<group>"; };
+		A0676CC827F3222600572AA7 /* RequestDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RequestDataModel.xcdatamodel; sourceTree = "<group>"; };
+		A0676CCB27F3D37100572AA7 /* Data + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Data + Extension.swift"; path = "InstabugNetworkClient/Data + Extension.swift"; sourceTree = SOURCE_ROOT; };
+		A0676CCE27F3D3CD00572AA7 /* RequestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RequestData.swift; path = InstabugNetworkClient/RequestData.swift; sourceTree = SOURCE_ROOT; };
+		A0676CD027F3D3E800572AA7 /* URLSessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLSessionResponse.swift; path = InstabugNetworkClient/URLSessionResponse.swift; sourceTree = SOURCE_ROOT; };
+		A0676CD227F3D41900572AA7 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPError.swift; path = InstabugNetworkClient/HTTPError.swift; sourceTree = SOURCE_ROOT; };
+		A0676CD427F3D4E300572AA7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = InstabugNetworkClient/Constants.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,9 +155,13 @@
 		24AA93B925AF0F0D007588C7 /* InstabugNetworkClient */ = {
 			isa = PBXGroup;
 			children = (
+				A0676CCD27F3D3BC00572AA7 /* Models */,
+				A0676CCA27F3D35E00572AA7 /* Extensions */,
 				24AA93BA25AF0F0D007588C7 /* InstabugNetworkClient.h */,
 				24AA93BB25AF0F0D007588C7 /* Info.plist */,
 				24AA93D825AF0F24007588C7 /* NetworkClient.swift */,
+				A0676CC527F3216200572AA7 /* DataStorageManager.swift */,
+				A0676CC727F3222600572AA7 /* RequestDataModel.xcdatamodeld */,
 			);
 			path = InstabugNetworkClient;
 			sourceTree = "<group>";
@@ -155,6 +173,25 @@
 				24AA93C925AF0F0D007588C7 /* Info.plist */,
 			);
 			path = InstabugNetworkClientTests;
+			sourceTree = "<group>";
+		};
+		A0676CCA27F3D35E00572AA7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A0676CCB27F3D37100572AA7 /* Data + Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A0676CCD27F3D3BC00572AA7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A0676CCE27F3D3CD00572AA7 /* RequestData.swift */,
+				A0676CD027F3D3E800572AA7 /* URLSessionResponse.swift */,
+				A0676CD227F3D41900572AA7 /* HTTPError.swift */,
+				A0676CD427F3D4E300572AA7 /* Constants.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +349,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				24AA93D925AF0F24007588C7 /* NetworkClient.swift in Sources */,
+				A0676CCF27F3D3CD00572AA7 /* RequestData.swift in Sources */,
+				A0676CD327F3D41900572AA7 /* HTTPError.swift in Sources */,
+				A0676CC627F3216200572AA7 /* DataStorageManager.swift in Sources */,
+				A0676CC927F3222600572AA7 /* RequestDataModel.xcdatamodeld in Sources */,
+				A0676CCC27F3D37100572AA7 /* Data + Extension.swift in Sources */,
+				A0676CD127F3D3E800572AA7 /* URLSessionResponse.swift in Sources */,
+				A0676CD527F3D4E300572AA7 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +694,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A0676CC727F3222600572AA7 /* RequestDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A0676CC827F3222600572AA7 /* RequestDataModel.xcdatamodel */,
+			);
+			currentVersion = A0676CC827F3222600572AA7 /* RequestDataModel.xcdatamodel */;
+			path = RequestDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 24AA939325AF0DA4007588C7 /* Project object */;
 }
