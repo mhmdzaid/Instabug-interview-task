@@ -14,6 +14,6 @@ extension Data {
     /// The payload string to be stored directly 
     var payloadString: String {
         let encodedString = (String(data: self, encoding: .utf8) ?? "")
-        return isGreaterThanOneMegaByte() ? Constants.largePayload.rawValue : encodedString
+        return isGreaterThanOneMegaByte() ? Messages.largePayload.rawValue : encodedString
     }
 }

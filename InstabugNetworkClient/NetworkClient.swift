@@ -16,7 +16,7 @@ public class NetworkClient {
     }
     
     public func post(_ url: URL, payload: Data?=nil, completionHandler: @escaping (Data?) -> Void) {
-        executeRequest(url, method: "POSt", payload: payload, completionHandler: completionHandler)
+        executeRequest(url, method: "POST", payload: payload, completionHandler: completionHandler)
     }
     
     public func put(_ url: URL, payload: Data?=nil, completionHandler: @escaping (Data?) -> Void) {
@@ -54,37 +54,20 @@ public class NetworkClient {
     
     private func handle(requestData: RequestData, response: HTTPURLResponse, data: Data) {
         
-        switch response.statusCode {
-        case 200:
+        if response.statusCode == 200 {
             let requestResponse = URLSessionResponse(response: response,
                                                      data: data)
             storageManager?.SaveRequestWith(requestData: requestData,
                                             result: .success(requestResponse))
             
-        case 400:
-            storageManager?.SaveRequestWith(requestData: requestData,
-                                            result: .failure(.badRequest))
+        } else {
             
-        case 401:
+            let error = HTTPError(rawValue: response.statusCode) ?? .notMappedError
             storageManager?.SaveRequestWith(requestData: requestData,
-                                            result: .failure(.unauthorized))
-            
-        case 403:
-            storageManager?.SaveRequestWith(requestData: requestData,
-                                            result: .failure(.forbidden))
-            
-        case 404:
-            storageManager?.SaveRequestWith(requestData: requestData,
-                                            result: .failure(.notFound))
-            
-        case 500:
-            storageManager?.SaveRequestWith(requestData: requestData,
-                                            result: .failure(.internalServerError))
-            
-        default:
-            break
+                                            result: .failure(error))
         }
     }
+    
     // MARK: Network recording
     public func allNetworkRequests() -> [RequestRecord] {
         var records: [RequestRecord] = []
@@ -92,5 +75,9 @@ public class NetworkClient {
             records = returnedRecords
         })
         return records
+    }
+    
+    public func clearAllRecords() {
+        storageManager?.clear()
     }
 }

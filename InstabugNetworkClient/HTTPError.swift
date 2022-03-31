@@ -14,4 +14,5 @@ public enum HTTPError : Int, Error {
     case notFound = 404
     case internalServerError = 500
     case networkIssue
+    case notMappedError
 }

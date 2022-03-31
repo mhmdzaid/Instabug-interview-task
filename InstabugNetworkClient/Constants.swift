@@ -10,33 +10,26 @@ import Foundation
 
 
 enum Constants: String {
-    
-    // Configs
     case bundleID = "com.Instabug.InstabugNetworkClient"
-    case dataModelName = "RequestDataModel"
-    
-    // Entity names
-    
-    case record = "RequestRecord"
-    case request = "Request"
-    case response = "Response"
-    
-    // Request attributes
-    
+    case modelName = "RequestDataModel"
+}
+
+enum AttributeKey: String {
     case method
     case url
-    
-    // Response attributes
-    
     case errorCode
     case errorDomain
     case statusCode
-    
-    // shared Attributes (Request, Response)
-    
     case payloadBody
-    
-    // Messages
+}
+
+enum Messages: String {
     case largePayload = "(payload too large)"
     case fetchFailure = "Failed to fetch records"
+}
+
+enum EntityKey: String {
+    case record = "RequestRecord"
+    case request = "Request"
+    case response = "Response"
 }

@@ -26,6 +26,11 @@
 		A0676CD127F3D3E800572AA7 /* URLSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD027F3D3E800572AA7 /* URLSessionResponse.swift */; };
 		A0676CD327F3D41900572AA7 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD227F3D41900572AA7 /* HTTPError.swift */; };
 		A0676CD527F3D4E300572AA7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD427F3D4E300572AA7 /* Constants.swift */; };
+		A0FDC3E627F4916D007145AE /* DataStorageManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3E527F4916D007145AE /* DataStorageManagerProtocol.swift */; };
+		A0FDC3EB27F530DF007145AE /* StorageManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3EA27F530DF007145AE /* StorageManagerMock.swift */; };
+		A0FDC3EF27F53684007145AE /* DataStorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3EE27F53684007145AE /* DataStorageManagerTests.swift */; };
+		A0FDC3F127F54041007145AE /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3F027F54041007145AE /* TestCoreDataStack.swift */; };
+		A0FDC3F327F54C35007145AE /* RequestToBeSavedResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = A0FDC3F227F54C35007145AE /* RequestToBeSavedResponse.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +94,11 @@
 		A0676CD027F3D3E800572AA7 /* URLSessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLSessionResponse.swift; path = InstabugNetworkClient/URLSessionResponse.swift; sourceTree = SOURCE_ROOT; };
 		A0676CD227F3D41900572AA7 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPError.swift; path = InstabugNetworkClient/HTTPError.swift; sourceTree = SOURCE_ROOT; };
 		A0676CD427F3D4E300572AA7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = InstabugNetworkClient/Constants.swift; sourceTree = SOURCE_ROOT; };
+		A0FDC3E527F4916D007145AE /* DataStorageManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageManagerProtocol.swift; sourceTree = "<group>"; };
+		A0FDC3EA27F530DF007145AE /* StorageManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerMock.swift; sourceTree = "<group>"; };
+		A0FDC3EE27F53684007145AE /* DataStorageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageManagerTests.swift; sourceTree = "<group>"; };
+		A0FDC3F027F54041007145AE /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
+		A0FDC3F227F54C35007145AE /* RequestToBeSavedResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RequestToBeSavedResponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +170,7 @@
 				24AA93BA25AF0F0D007588C7 /* InstabugNetworkClient.h */,
 				24AA93BB25AF0F0D007588C7 /* Info.plist */,
 				24AA93D825AF0F24007588C7 /* NetworkClient.swift */,
+				A0FDC3E527F4916D007145AE /* DataStorageManagerProtocol.swift */,
 				A0676CC527F3216200572AA7 /* DataStorageManager.swift */,
 				A0676CC727F3222600572AA7 /* RequestDataModel.xcdatamodeld */,
 			);
@@ -170,6 +181,10 @@
 			isa = PBXGroup;
 			children = (
 				24AA93C725AF0F0D007588C7 /* InstabugNetworkClientTests.swift */,
+				A0FDC3EE27F53684007145AE /* DataStorageManagerTests.swift */,
+				A0FDC3EA27F530DF007145AE /* StorageManagerMock.swift */,
+				A0FDC3F027F54041007145AE /* TestCoreDataStack.swift */,
+				A0FDC3F227F54C35007145AE /* RequestToBeSavedResponse.json */,
 				24AA93C925AF0F0D007588C7 /* Info.plist */,
 			);
 			path = InstabugNetworkClientTests;
@@ -328,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0FDC3F327F54C35007145AE /* RequestToBeSavedResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +369,7 @@
 				A0676CD327F3D41900572AA7 /* HTTPError.swift in Sources */,
 				A0676CC627F3216200572AA7 /* DataStorageManager.swift in Sources */,
 				A0676CC927F3222600572AA7 /* RequestDataModel.xcdatamodeld in Sources */,
+				A0FDC3E627F4916D007145AE /* DataStorageManagerProtocol.swift in Sources */,
 				A0676CCC27F3D37100572AA7 /* Data + Extension.swift in Sources */,
 				A0676CD127F3D3E800572AA7 /* URLSessionResponse.swift in Sources */,
 				A0676CD527F3D4E300572AA7 /* Constants.swift in Sources */,
@@ -363,7 +380,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0FDC3EF27F53684007145AE /* DataStorageManagerTests.swift in Sources */,
 				24AA93C825AF0F0D007588C7 /* InstabugNetworkClientTests.swift in Sources */,
+				A0FDC3EB27F530DF007145AE /* StorageManagerMock.swift in Sources */,
+				A0FDC3F127F54041007145AE /* TestCoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
