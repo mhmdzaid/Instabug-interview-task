@@ -6,6 +6,7 @@
         <attribute name="url" optional="YES" attributeType="String"/>
     </entity>
     <entity name="RequestRecord" representedClassName="RequestRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="request" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Request"/>
         <relationship name="response" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Response"/>
     </entity>
@@ -17,7 +18,7 @@
     </entity>
     <elements>
         <element name="Request" positionX="-26.65692138671875" positionY="-10.98004150390625" width="128" height="74"/>
-        <element name="RequestRecord" positionX="-176.142333984375" positionY="-164.1522827148438" width="128" height="59"/>
+        <element name="RequestRecord" positionX="-176.142333984375" positionY="-164.1522827148438" width="128" height="74"/>
         <element name="Response" positionX="-326.8514404296875" positionY="-13.74734497070312" width="128" height="89"/>
     </elements>
 </model>

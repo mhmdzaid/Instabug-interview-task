@@ -12,7 +12,7 @@ class DataStorageManager: DataStorageManagerProtocol {
     private static let identifier: String  = Constants.bundleID.rawValue
     public static let modelName: String = Constants.modelName.rawValue
     var recordsLimitNumber: Int {
-        return 3
+        return 1000
     }
     
     public static let model: NSManagedObjectModel = {
@@ -42,7 +42,7 @@ class DataStorageManager: DataStorageManagerProtocol {
     
     /// Saves request record given request data and result of API call
     func SaveRequestWith(requestData: RequestData, result: Result<URLSessionResponse, HTTPError>) {
-        managedObjectContext.perform {
+        managedObjectContext.performAndWait {
             self.deleteFirstRecordIfExceededLimit()
             self.creatRequestRecord(requestData: requestData, result: result)
         }
@@ -71,7 +71,7 @@ class DataStorageManager: DataStorageManagerProtocol {
     }
     
     fileprivate func deleteFirstRecord(from records: [RequestRecord]) {
-        if let firstRequest = records.first {
+        if let firstRequest = records.max(by: { return ($0.creationDate ?? Date()) > ($1.creationDate ?? Date())}) {
             self.managedObjectContext.delete(firstRequest)
         }
         self.save()
@@ -92,6 +92,7 @@ class DataStorageManager: DataStorageManagerProtocol {
         let response = createResponseObject(result: result)
         record.response = response
         record.request = request
+        record.creationDate = Date()
         save()
     }
     
@@ -134,7 +135,7 @@ class DataStorageManager: DataStorageManagerProtocol {
     }
     /// Removes all records from the disk
     func clear() {
-        managedObjectContext.perform { [weak self] in
+        managedObjectContext.performAndWait { [weak self] in
             guard let self = self else {
                 return
             }
