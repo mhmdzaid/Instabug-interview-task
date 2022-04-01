@@ -11,7 +11,7 @@
         <relationship name="response" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Response"/>
     </entity>
     <entity name="Response" representedClassName="Response" syncable="YES" codeGenerationType="class">
-        <attribute name="errorCode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="errorCode" optional="YES" attributeType="String"/>
         <attribute name="errorDomain" optional="YES" attributeType="String"/>
         <attribute name="payloadBody" optional="YES" attributeType="String"/>
         <attribute name="statusCode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

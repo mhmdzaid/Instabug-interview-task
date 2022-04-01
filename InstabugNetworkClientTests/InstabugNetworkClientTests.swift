@@ -30,101 +30,118 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testGetRequestSuccess() {
         let requestExpectation = expectation(description: "get request success response")
-        if let url = URL(string: "https://httpbin.org/get") {
-            networkClient.get(url) { _ in
-                requestExpectation.fulfill()
-            }
+        guard let url = URL(string: "https://httpbin.org/get") else {
+            XCTFail("wrong url .. ")
+            return
+        }
+        networkClient.get(url) { _ in
+            requestExpectation.fulfill()
+        }
+        
+        wait(for: [requestExpectation], timeout: 5)
+        
+        let result = storageManager.result
+        
+        switch result {
+        case .success:
+            let request = storageManager.request
+            XCTAssertNotNil(request)
+            self.runAssertionsFor(request: request!, ofType: .get)
             
-            wait(for: [requestExpectation], timeout: 5)
             
-            let result = self.storageManager.result
-            switch result {
-            case .success:
-                let request = self.storageManager.request
-                self.runAssertionsFor(request: request, ofType: .get)
-                
-            case .failure(let error):
-                XCTAssertEqual(error, .networkIssue)
-                
-            case .none:
-                assertionFailure("No response from the API.")
-            }
+        case .failure(let error):
+            XCTAssertEqual(error, .serviceUnavailable)
+            
+        case .none:
+            assertionFailure("No response from the API.")
         }
     }
     
     func testGetRequestFailure() {
         let requestExpectation = expectation(description: "get request failure response")
-        if let url = URL(string: "https://httpbin.org/status/500") {
-            networkClient.get(url) { _ in
-                requestExpectation.fulfill()
-            }
-            wait(for: [requestExpectation], timeout: 5)
+        guard let url = URL(string: "https://httpbin.org/status/500") else {
+            XCTFail("wrong url .. ")
+            return
+        }
+        networkClient.get(url) { _ in
+            requestExpectation.fulfill()
+        }
+        wait(for: [requestExpectation], timeout: 5)
+        
+        let result = storageManager.result
+        
+        switch result {
+        case .success:
+            let request = storageManager.request
+            XCTAssertNotNil(request)
+            self.runAssertionsFor(request: request, ofType: .get)
             
-            let result = self.storageManager.result
-            switch result {
-            case .success:
-                let request = self.storageManager.request
-                self.runAssertionsFor(request: request, ofType: .get)
-                
-            case .failure(let error):
-                XCTAssertEqual(error, .internalServerError)
-                
-            case .none:
-                assertionFailure("No response from the API.")
-            }
+        case .failure(let error):
+            XCTAssertEqual(error, .internalServerError)
+            
+        case .none:
+            assertionFailure("No response from the API.")
         }
     }
     
     // MARK: POST tests
     func testPostRequestSuccess() throws {
         let requestExpectation = expectation(description: "post request success response")
-        if let url = URL(string: "https://httpbin.org/post") {
-            let parameters: [String: Any] = ["id": 10]
-            let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
-            networkClient.post(url, payload: payloadData) { _ in
-                requestExpectation.fulfill()
-            }
+        guard let url = URL(string: "https://httpbin.org/post") else {
+            XCTFail("wrong url .. ")
+            return
+        }
+        let parameters: [String: Any] = ["id": 10]
+        let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
+        networkClient.post(url, payload: payloadData) { _ in
+            requestExpectation.fulfill()
+        }
+        
+        wait(for: [requestExpectation], timeout: 5)
+        
+        let result = storageManager.result
+        
+        switch result {
+        case .success:
+            let request = storageManager.request
+            XCTAssertNotNil(request)
+            self.runAssertionsFor(request: request!, ofType: .post)
             
-            wait(for: [requestExpectation], timeout: 5)
+        case .failure(let error):
+            XCTAssertEqual(error, .serviceUnavailable)
             
-            let result = self.storageManager.result
-            switch result {
-            case .success:
-                let request = self.storageManager.request
-                self.runAssertionsFor(request: request, ofType: .post)
-                
-            case .failure(let error):
-                XCTAssertEqual(error, .networkIssue)
-                
-            case .none:
-                assertionFailure("No response from the API.")
-            }
+        case .none:
+            assertionFailure("No response from the API.")
         }
     }
     
     func testPostRequestFailure() throws {
         let requestExpectation = expectation(description: "post request failure response")
-        if let url = URL(string: "https://httpbin.org/status/401") {
-            let parameters: [String: Any] = ["id": 10]
-            let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
-            networkClient.post(url, payload: payloadData) { _ in
-                requestExpectation.fulfill()
-            }
+        guard let url = URL(string: "https://httpbin.org/status/401") else {
+            XCTFail("wrong url .. ")
+            return
+        }
+        let parameters: [String: Any] = ["id": 10]
+        let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
+        networkClient.post(url, payload: payloadData) { _ in
+            requestExpectation.fulfill()
+        }
+        
+        wait(for: [requestExpectation], timeout: 5)
+        
+        let result = storageManager.result
+        
+        switch result {
+        case .success:
+            let request = storageManager.request
+            XCTAssertNotNil(request)
+            self.runAssertionsFor(request: request!, ofType: .post)
             
-            wait(for: [requestExpectation], timeout: 5)
+        case .failure(let error):
+            XCTAssertEqual(error, .unauthorized)
             
-            let result = self.storageManager.result
-            switch result {
-            case .success:
-                let request = self.storageManager.request
-                self.runAssertionsFor(request: request, ofType: .post)
-                
-            case .failure(let error):
-                XCTAssertEqual(error, .unauthorized)
-                
-            case .none:
-                assertionFailure("No response from the API.")
-            }
+        case .none:
+            assertionFailure("No response from the API.")
         }
     }
     
@@ -132,53 +149,60 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testPutRequestSuccess() throws {
         let requestExpectation = expectation(description: "put request success response")
-        if let url = URL(string: "https://httpbin.org/put") {
-            let parameters: [String: Any] = ["id": 10]
-            let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
-            networkClient.put(url, payload: payloadData) { _ in
-                requestExpectation.fulfill()
-            }
+        guard let url = URL(string: "https://httpbin.org/put") else {
+            XCTFail("wrong url .. ")
+            return
+        }
+        let parameters: [String: Any] = ["id": 10]
+        let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
+        networkClient.put(url, payload: payloadData) { _ in
+            requestExpectation.fulfill()
+        }
+        
+        wait(for: [requestExpectation], timeout: 5)
+        
+        let result = storageManager.result
+        
+        switch result {
+        case .success:
+            let request = storageManager.request
+            XCTAssertNotNil(request)
+            self.runAssertionsFor(request: request!, ofType: .put)
             
-            wait(for: [requestExpectation], timeout: 5)
+        case .failure(let error):
+            XCTAssertEqual(error, .serviceUnavailable)
             
-            let result = self.storageManager.result
-            switch result {
-            case .success:
-                let request = self.storageManager.request
-                self.runAssertionsFor(request: request, ofType: .put)
-                
-            case .failure(let error):
-                XCTAssertEqual(error, .networkIssue)
-                
-            case .none:
-                assertionFailure("No response from the API.")
-            }
+        case .none:
+            assertionFailure("No response from the API.")
         }
     }
     
     func testPutRequestFailure() throws {
         let requestExpectation = expectation(description: "put request failure response")
-        if let url = URL(string: "https://httpbin.org/status/403") {
-            let parameters: [String: Any] = ["id": 10]
-            let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
-            networkClient.put(url, payload: payloadData) { _ in
-                requestExpectation.fulfill()
-            }
+        guard let url = URL(string: "https://httpbin.org/status/403") else {
+            XCTFail("wrong url .. ")
+            return
+        }
+        let parameters: [String: Any] = ["id": 10]
+        let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
+        networkClient.put(url, payload: payloadData) { _ in
+            requestExpectation.fulfill()
+        }
+        
+        wait(for: [requestExpectation], timeout: 5)
+        
+        let result = storageManager.result
+        
+        switch result {
+        case .success:
+            let request = storageManager.request
+            self.runAssertionsFor(request: request, ofType: .put)
             
-            wait(for: [requestExpectation], timeout: 5)
+        case .failure(let error):
+            XCTAssertEqual(error, .forbidden)
             
-            let result = self.storageManager.result
-            switch result {
-            case .success:
-                let request = self.storageManager.request
-                self.runAssertionsFor(request: request, ofType: .put)
-                
-            case .failure(let error):
-                XCTAssertEqual(error, .forbidden)
-                
-            case .none:
-                assertionFailure("No response from the API.")
-            }
+        case .none:
+            assertionFailure("No response from the API.")
         }
     }
     
@@ -186,72 +210,78 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testDeleteRequestSuccess() throws {
         let requestExpectation = expectation(description: "delete request success response")
-        if let url = URL(string: "https://httpbin.org/delete") {
-            networkClient.delete(url) { _ in
-                requestExpectation.fulfill()
-            }
+        guard let url = URL(string: "https://httpbin.org/delete") else {
+            XCTFail("wrong url .. ")
+            return
+        }
+        networkClient.delete(url) { _ in
+            requestExpectation.fulfill()
+        }
+        
+        wait(for: [requestExpectation], timeout: 5)
+        
+        let result = self.storageManager.result
+        
+        switch result {
+        case .success:
+            let request = self.storageManager.request
+            self.runAssertionsFor(request: request, ofType: .delete)
             
-            wait(for: [requestExpectation], timeout: 5)
+        case .failure(let error):
+            XCTAssertEqual(error, .serviceUnavailable)
             
-            let result = self.storageManager.result
-            switch result {
-            case .success:
-                let request = self.storageManager.request
-                self.runAssertionsFor(request: request, ofType: .delete)
-                
-            case .failure(let error):
-                XCTAssertEqual(error, .networkIssue)
-                
-            case .none:
-                assertionFailure("No response from the API.")
-            }
+        case .none:
+            assertionFailure("No response from the API.")
         }
     }
     
     func testDeleteRequestFailure() throws {
         let requestExpectation = expectation(description: "delete request failure response")
-        if let url = URL(string: "https://httpbin.org/status/400") {
-            networkClient.delete(url) { _ in
-                requestExpectation.fulfill()
-            }
+        guard let url = URL(string: "https://httpbin.org/status/400") else {
+            XCTFail("wrong url .. ")
+            return
+        }
+        networkClient.delete(url) { _ in
+            requestExpectation.fulfill()
+        }
+        
+        wait(for: [requestExpectation], timeout: 5)
+        
+        let result = storageManager.result
+        
+        switch result {
+        case .success:
+            let request = storageManager.request
+            self.runAssertionsFor(request: request, ofType: .put)
             
-            wait(for: [requestExpectation], timeout: 5)
+        case .failure(let error):
+            XCTAssertEqual(error, .badRequest)
             
-            let result = self.storageManager.result
-            switch result {
-            case .success:
-                let request = self.storageManager.request
-                self.runAssertionsFor(request: request, ofType: .put)
-                
-            case .failure(let error):
-                XCTAssertEqual(error, .badRequest)
-                
-            case .none:
-                assertionFailure("No response from the API.")
-            }
+        case .none:
+            assertionFailure("No response from the API.")
         }
     }
     
     // MARK: Other
     /// Runs assertions on each request based on its type
     fileprivate func runAssertionsFor(request: RequestData?, ofType requestType: RequestType) {
-        if let request = request {
-            XCTAssertEqual(request.method , requestType.rawValue.uppercased())
-            XCTAssertEqual(request.url, requestType.typeStringURL)
-            if let payloadData = request.requestPayload {
-                do {
-                    let payloadDictionary = try JSONSerialization.jsonObject(with: payloadData, options: .fragmentsAllowed) as! [String: Any]
-                    XCTAssertEqual(payloadDictionary["id"] as! Int, 10)
-                } catch let error {
-                    XCTAssertThrowsError(error)
-                }
+        XCTAssertNotNil(request)
+        XCTAssertEqual(request?.method ?? "" , requestType.rawValue.uppercased())
+        XCTAssertEqual(request?.url ?? "", requestType.typeStringURL)
+        if let payloadData = request?.requestPayload {
+            do {
+                let payloadDictionary = try JSONSerialization.jsonObject(with: payloadData, options: .fragmentsAllowed) as! [String: Any]
+                XCTAssertEqual(payloadDictionary["id"] as! Int, 10)
+            } catch let error {
+                XCTAssertThrowsError(error)
             }
         }
     }
-    override func tearDownWithError() throws {
+    
+    override func tearDown() {
         storageManager = nil
         networkClient = nil
-        try super.tearDownWithError()
+        super.tearDown()
     }
     
 }

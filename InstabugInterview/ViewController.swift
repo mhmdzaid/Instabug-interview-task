@@ -18,12 +18,12 @@ class ViewController: UIViewController {
     
     @IBAction func sendGet(_ sender: UIButton) {
         
-        guard let url = URL(string: "https://httpbin.org/get") else {
+        guard let url = URL(string: "https://httpbin.org/status/500") else {
             return
         }
         
         NetworkClient.shared.get(url) { data in
-            print(data)
+            print("sent")
         }
     }
     
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         }
         
         NetworkClient.shared.post(url4, payload: self.getParamsData()) { data in
-            print(data)
+            print("sent")
         }
     }
     
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         }
         
         NetworkClient.shared.put(url4, payload: self.getParamsData()) { data in
-            print(data)
+            print("sent")
         }
     }
     
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
             return
         }
         NetworkClient.shared.delete(url) { data in
-            print(data)
+            print("sent")
         }
     }
     

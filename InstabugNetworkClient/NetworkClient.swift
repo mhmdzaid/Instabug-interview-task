@@ -28,22 +28,17 @@ public class NetworkClient {
     }
     
     func executeRequest(_ url: URL, method: String, payload: Data?, completionHandler: @escaping (Data?) -> Void) {
-        let requestData = RequestData(url: url.absoluteString,
-                                      requestPayload: payload,
-                                      method: method)
-        
+        let requestData = RequestData(url: url.absoluteString, requestPayload: payload, method: method)
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method
         urlRequest.httpBody = payload
-        URLSession.shared.dataTask(with: urlRequest) {[weak self] data, response, error in
-            guard let self = self else {
-                return
-            }
+        
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            
             if let response = response, let data = data {
                 self.handle(requestData: requestData, response: response as! HTTPURLResponse, data: data)
             } else {
-                self.storageManager?.SaveRequestWith(requestData: requestData,
-                                                     result: .failure(.networkIssue))
+                self.storageManager?.SaveRequestWith(requestData: requestData, result: .failure(.serviceUnavailable))
             }
             
             DispatchQueue.main.async {
@@ -54,17 +49,15 @@ public class NetworkClient {
     
     private func handle(requestData: RequestData, response: HTTPURLResponse, data: Data) {
         
-        if response.statusCode == 200 {
-            let requestResponse = URLSessionResponse(urlResponse: response,
-                                                     payloadResponseData: data)
-            storageManager?.SaveRequestWith(requestData: requestData,
-                                            result: .success(requestResponse))
+        if let domain = response.domain, domain == .success {
+            
+            let requestResponse = URLSessionResponse(urlResponse: response, payloadResponseData: data)
+            storageManager?.SaveRequestWith(requestData: requestData, result: .success(requestResponse))
             
         } else {
             
-            let error = HTTPError(rawValue: response.statusCode) ?? .notMappedError
-            storageManager?.SaveRequestWith(requestData: requestData,
-                                            result: .failure(error))
+            let error = HTTPError(rawValue: response.statusCode) ?? .serviceUnavailable
+            storageManager?.SaveRequestWith(requestData: requestData, result: .failure(error))
         }
     }
     

@@ -23,8 +23,7 @@ class DataStorageManager: DataStorageManagerProtocol {
     
     lazy var persistentContainer: NSPersistentContainer = {
         let bundle = Bundle(identifier: DataStorageManager.identifier)
-        let container = NSPersistentContainer(name: DataStorageManager.modelName,
-                                              managedObjectModel: DataStorageManager.model)
+        let container = NSPersistentContainer(name: DataStorageManager.modelName, managedObjectModel: DataStorageManager.model)
         container.loadPersistentStores { (storeDescription, error) in
             if let err = error {
                 fatalError("loading failure :\(err.localizedDescription)")
@@ -60,6 +59,7 @@ class DataStorageManager: DataStorageManagerProtocol {
     func fetchAllRecords(completion: @escaping(_ records: [RequestRecord]) -> Void) {
         let fetchRequest = NSFetchRequest<RequestRecord>(entityName: EntityKey.record.rawValue)
         do {
+            
             let records = try managedObjectContext.fetch(fetchRequest)
             completion(records)
             
@@ -113,24 +113,33 @@ class DataStorageManager: DataStorageManagerProtocol {
                                                            into: managedObjectContext) as! Response
         switch result {
         case .success(let urlResponse):
-            let httpUrlResponse = urlResponse.urlResponse as? HTTPURLResponse
-            
-            let statusCode = Int16(httpUrlResponse?.statusCode ?? 200)
-            response.setValue(statusCode, forKey: AttributeKey.statusCode.rawValue)
-            
-            let payloadString = urlResponse.payloadResponseData.payloadEncodedString
-            response.setValue(payloadString, forKey: AttributeKey.payloadBody.rawValue)
+            populateResponseOnSuccess(response, with: urlResponse)
             
         case .failure(let error):
-            let errorCode = Int16((error as NSError).code)
-            response.setValue(errorCode, forKey: AttributeKey.errorCode.rawValue)
-            
-            let errorDomain = (error as NSError).domain
-            response.setValue(errorDomain, forKey: AttributeKey.errorDomain.rawValue)
+            populateResponseOnFailure(response, with: error)
         }
         
         return response
     }
+    
+    fileprivate func populateResponseOnSuccess(_ response: Response, with responseData: URLSessionResponse) {
+        let httpUrlResponse = responseData.urlResponse as? HTTPURLResponse
+        
+        let statusCode = Int16(httpUrlResponse?.statusCode ?? 200)
+        response.setValue(statusCode, forKey: AttributeKey.statusCode.rawValue)
+        
+        let payloadString = responseData.payloadResponseData.payloadEncodedString
+        response.setValue(payloadString, forKey: AttributeKey.payloadBody.rawValue)
+    }
+    
+    fileprivate func populateResponseOnFailure(_ response: Response, with error: HTTPError) {
+        let errorCode = String((error as NSError).code)
+        response.setValue(errorCode, forKey: AttributeKey.errorCode.rawValue)
+        
+        let errorDomain = error.domain.rawValue
+        response.setValue(errorDomain, forKey: AttributeKey.errorDomain.rawValue)
+    }
+    
     /// Removes all records from the disk
     func clear() {
         managedObjectContext.perform { [weak self] in
