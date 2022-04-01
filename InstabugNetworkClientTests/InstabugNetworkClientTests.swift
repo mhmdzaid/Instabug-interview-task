@@ -30,7 +30,7 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testGetRequestSuccess() {
         let requestExpectation = expectation(description: "get request success response")
-        if let url = URL(string: RequestType.get.typeStringURL) {
+        if let url = URL(string: "https://httpbin.org/get") {
             networkClient.get(url) { _ in
                 requestExpectation.fulfill()
             }
@@ -54,7 +54,7 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testGetRequestFailure() {
         let requestExpectation = expectation(description: "get request failure response")
-        if let url = URL(string: RequestType.get.urlForErrorWith(status: 500)) {
+        if let url = URL(string: "https://httpbin.org/status/500") {
             networkClient.get(url) { _ in
                 requestExpectation.fulfill()
             }
@@ -78,7 +78,7 @@ class InstabugNetworkClientTests: XCTestCase {
     // MARK: POST tests
     func testPostRequestSuccess() throws {
         let requestExpectation = expectation(description: "post request success response")
-        if let url = URL(string: RequestType.post.typeStringURL) {
+        if let url = URL(string: "https://httpbin.org/post") {
             let parameters: [String: Any] = ["id": 10]
             let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
             networkClient.post(url, payload: payloadData) { _ in
@@ -104,7 +104,7 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testPostRequestFailure() throws {
         let requestExpectation = expectation(description: "post request failure response")
-        if let url = URL(string: RequestType.post.urlForErrorWith(status: 401)) {
+        if let url = URL(string: "https://httpbin.org/status/401") {
             let parameters: [String: Any] = ["id": 10]
             let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
             networkClient.post(url, payload: payloadData) { _ in
@@ -132,7 +132,7 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testPutRequestSuccess() throws {
         let requestExpectation = expectation(description: "put request success response")
-        if let url = URL(string: RequestType.put.typeStringURL) {
+        if let url = URL(string: "https://httpbin.org/put") {
             let parameters: [String: Any] = ["id": 10]
             let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
             networkClient.put(url, payload: payloadData) { _ in
@@ -158,7 +158,7 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testPutRequestFailure() throws {
         let requestExpectation = expectation(description: "put request failure response")
-        if let url = URL(string: RequestType.put.urlForErrorWith(status: 403)) {
+        if let url = URL(string: "https://httpbin.org/status/403") {
             let parameters: [String: Any] = ["id": 10]
             let payloadData = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
             networkClient.put(url, payload: payloadData) { _ in
@@ -186,7 +186,7 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testDeleteRequestSuccess() throws {
         let requestExpectation = expectation(description: "delete request success response")
-        if let url = URL(string: RequestType.delete.typeStringURL) {
+        if let url = URL(string: "https://httpbin.org/delete") {
             networkClient.delete(url) { _ in
                 requestExpectation.fulfill()
             }
@@ -210,7 +210,7 @@ class InstabugNetworkClientTests: XCTestCase {
     
     func testDeleteRequestFailure() throws {
         let requestExpectation = expectation(description: "delete request failure response")
-        if let url = URL(string: RequestType.delete.urlForErrorWith(status: 400)) {
+        if let url = URL(string: "https://httpbin.org/status/400") {
             networkClient.delete(url) { _ in
                 requestExpectation.fulfill()
             }
@@ -233,7 +233,7 @@ class InstabugNetworkClientTests: XCTestCase {
     }
     
     // MARK: Other
-    
+    /// Runs assertions on each request based on its type
     fileprivate func runAssertionsFor(request: RequestData?, ofType requestType: RequestType) {
         if let request = request {
             XCTAssertEqual(request.method , requestType.rawValue.uppercased())

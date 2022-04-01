@@ -55,8 +55,8 @@ public class NetworkClient {
     private func handle(requestData: RequestData, response: HTTPURLResponse, data: Data) {
         
         if response.statusCode == 200 {
-            let requestResponse = URLSessionResponse(response: response,
-                                                     data: data)
+            let requestResponse = URLSessionResponse(urlResponse: response,
+                                                     payloadResponseData: data)
             storageManager?.SaveRequestWith(requestData: requestData,
                                             result: .success(requestResponse))
             

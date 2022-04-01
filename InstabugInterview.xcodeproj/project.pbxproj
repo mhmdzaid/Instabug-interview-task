@@ -26,10 +26,12 @@
 		A0676CD127F3D3E800572AA7 /* URLSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD027F3D3E800572AA7 /* URLSessionResponse.swift */; };
 		A0676CD327F3D41900572AA7 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD227F3D41900572AA7 /* HTTPError.swift */; };
 		A0676CD527F3D4E300572AA7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0676CD427F3D4E300572AA7 /* Constants.swift */; };
+		A0B00B7727F677EA001A3E8D /* ResponseWithBigPayload.json in Resources */ = {isa = PBXBuildFile; fileRef = A0B00B7627F677EA001A3E8D /* ResponseWithBigPayload.json */; };
+		A0D0D02727F661FE0021459F /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D0D02627F661FE0021459F /* Array+Extension.swift */; };
 		A0FDC3E627F4916D007145AE /* DataStorageManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3E527F4916D007145AE /* DataStorageManagerProtocol.swift */; };
 		A0FDC3EB27F530DF007145AE /* StorageManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3EA27F530DF007145AE /* StorageManagerMock.swift */; };
 		A0FDC3EF27F53684007145AE /* DataStorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3EE27F53684007145AE /* DataStorageManagerTests.swift */; };
-		A0FDC3F127F54041007145AE /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3F027F54041007145AE /* TestCoreDataStack.swift */; };
+		A0FDC3F127F54041007145AE /* TestableDataStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FDC3F027F54041007145AE /* TestableDataStoreManager.swift */; };
 		A0FDC3F327F54C35007145AE /* RequestToBeSavedResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = A0FDC3F227F54C35007145AE /* RequestToBeSavedResponse.json */; };
 /* End PBXBuildFile section */
 
@@ -94,10 +96,12 @@
 		A0676CD027F3D3E800572AA7 /* URLSessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLSessionResponse.swift; path = InstabugNetworkClient/URLSessionResponse.swift; sourceTree = SOURCE_ROOT; };
 		A0676CD227F3D41900572AA7 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPError.swift; path = InstabugNetworkClient/HTTPError.swift; sourceTree = SOURCE_ROOT; };
 		A0676CD427F3D4E300572AA7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = InstabugNetworkClient/Constants.swift; sourceTree = SOURCE_ROOT; };
+		A0B00B7627F677EA001A3E8D /* ResponseWithBigPayload.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseWithBigPayload.json; sourceTree = "<group>"; };
+		A0D0D02627F661FE0021459F /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		A0FDC3E527F4916D007145AE /* DataStorageManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageManagerProtocol.swift; sourceTree = "<group>"; };
 		A0FDC3EA27F530DF007145AE /* StorageManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerMock.swift; sourceTree = "<group>"; };
 		A0FDC3EE27F53684007145AE /* DataStorageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageManagerTests.swift; sourceTree = "<group>"; };
-		A0FDC3F027F54041007145AE /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
+		A0FDC3F027F54041007145AE /* TestableDataStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableDataStoreManager.swift; sourceTree = "<group>"; };
 		A0FDC3F227F54C35007145AE /* RequestToBeSavedResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RequestToBeSavedResponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -180,20 +184,30 @@
 		24AA93C625AF0F0D007588C7 /* InstabugNetworkClientTests */ = {
 			isa = PBXGroup;
 			children = (
+				A00E1A0C27F6919000F524A4 /* Mocks */,
 				24AA93C725AF0F0D007588C7 /* InstabugNetworkClientTests.swift */,
 				A0FDC3EE27F53684007145AE /* DataStorageManagerTests.swift */,
-				A0FDC3EA27F530DF007145AE /* StorageManagerMock.swift */,
-				A0FDC3F027F54041007145AE /* TestCoreDataStack.swift */,
-				A0FDC3F227F54C35007145AE /* RequestToBeSavedResponse.json */,
 				24AA93C925AF0F0D007588C7 /* Info.plist */,
 			);
 			path = InstabugNetworkClientTests;
+			sourceTree = "<group>";
+		};
+		A00E1A0C27F6919000F524A4 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A0FDC3EA27F530DF007145AE /* StorageManagerMock.swift */,
+				A0FDC3F027F54041007145AE /* TestableDataStoreManager.swift */,
+				A0B00B7627F677EA001A3E8D /* ResponseWithBigPayload.json */,
+				A0FDC3F227F54C35007145AE /* RequestToBeSavedResponse.json */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		A0676CCA27F3D35E00572AA7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				A0676CCB27F3D37100572AA7 /* Data + Extension.swift */,
+				A0D0D02627F661FE0021459F /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -343,6 +357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0B00B7727F677EA001A3E8D /* ResponseWithBigPayload.json in Resources */,
 				A0FDC3F327F54C35007145AE /* RequestToBeSavedResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24AA93D925AF0F24007588C7 /* NetworkClient.swift in Sources */,
+				A0D0D02727F661FE0021459F /* Array+Extension.swift in Sources */,
 				A0676CCF27F3D3CD00572AA7 /* RequestData.swift in Sources */,
 				A0676CD327F3D41900572AA7 /* HTTPError.swift in Sources */,
 				A0676CC627F3216200572AA7 /* DataStorageManager.swift in Sources */,
@@ -383,7 +399,7 @@
 				A0FDC3EF27F53684007145AE /* DataStorageManagerTests.swift in Sources */,
 				24AA93C825AF0F0D007588C7 /* InstabugNetworkClientTests.swift in Sources */,
 				A0FDC3EB27F530DF007145AE /* StorageManagerMock.swift in Sources */,
-				A0FDC3F127F54041007145AE /* TestCoreDataStack.swift in Sources */,
+				A0FDC3F127F54041007145AE /* TestableDataStoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

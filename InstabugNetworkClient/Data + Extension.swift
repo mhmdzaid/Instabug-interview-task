@@ -12,7 +12,7 @@ extension Data {
         return Double(self.count / (1024 * 1024)) >= 1
     }
     /// The payload string to be stored directly 
-    var payloadString: String {
+    var payloadEncodedString: String {
         let encodedString = (String(data: self, encoding: .utf8) ?? "")
         return isGreaterThanOneMegaByte() ? Messages.largePayload.rawValue : encodedString
     }

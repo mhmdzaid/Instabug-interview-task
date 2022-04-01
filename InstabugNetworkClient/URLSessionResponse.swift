@@ -8,6 +8,9 @@
 import Foundation
 
 public struct URLSessionResponse {
-    let response: URLResponse
-    let data: Data
+    
+    let urlResponse: URLResponse
+    
+    let payloadResponseData: Data
+    
 }

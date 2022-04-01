@@ -12,60 +12,53 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let group = DispatchGroup()
-      
-        printAllRecords()
-        print("------------------------------")
         
-        group.enter()
-
-        guard let url4 = URL(string: "https://api.agify.io/?name=bella") else {
+    }
+    
+    
+    @IBAction func sendGet(_ sender: UIButton) {
+        
+        guard let url = URL(string: "https://httpbin.org/get") else {
             return
         }
         
-        NetworkClient.shared.post(url4, payload: self.getParamsData()) { _ in
-            group.leave()
-        }
-        
-        group.enter()
-
-        guard let url = URL(string: "https://assets-es-sit1.dxlpreprod.local.vodafone.es/mves/contentnew_ios.json") else {
-            return
-        }
-
-        NetworkClient.shared.get(url) { _ in
-            group.leave()
-        }
-       
-        group.enter()
-
-        guard let url2 = URL(string: "https://api.coindesk.com/v2/bpi/currentprice.json") else {
-            return
-        }
-
-        NetworkClient.shared.get(url2) { _ in
-            group.leave()
-        }
-        
-        
-        group.enter()
-
-        guard let url3 = URL(string: "https://archive.org/metadata/TheAdventuresOfTomSawyer_201303") else {
-            return
-        }
-
-        NetworkClient.shared.get(url3) { _ in
-            group.leave()
-        }
-        
-        
-        group.notify(queue: .main) {
-            self.printAllRecords()
+        NetworkClient.shared.get(url) { data in
+            print(data)
         }
     }
     
-    func printAllRecords() {
-        _ = NetworkClient.shared.allNetworkRequests().map({ record in
+    @IBAction func sendPost(_ sender: UIButton) {
+        guard let url4 = URL(string: "https://httpbin.org/post") else {
+            return
+        }
+        
+        NetworkClient.shared.post(url4, payload: self.getParamsData()) { data in
+            print(data)
+        }
+    }
+    
+    @IBAction func sendPut(_ sender: UIButton) {
+        guard let url4 = URL(string: "https://httpbin.org/put") else {
+            return
+        }
+        
+        NetworkClient.shared.put(url4, payload: self.getParamsData()) { data in
+            print(data)
+        }
+    }
+    
+    @IBAction func sendDelete(_ sender: UIButton) {
+        guard let url = URL(string: "https://httpbin.org/delete") else {
+            return
+        }
+        NetworkClient.shared.delete(url) { data in
+            print(data)
+        }
+    }
+    
+    @IBAction func printSavedRecords(_ sender: UIButton) {
+        let records = NetworkClient.shared.allNetworkRequests()
+        _ = records.map({ record in
             let request = record.request
             let response = record.response
             
@@ -79,10 +72,11 @@ class ViewController: UIViewController {
             print("errorCode : \(String(describing: response?.errorCode) )")
             print("payload: \(String(describing: response?.payloadBody) )")
             print("errorDomain: \(String(describing: response?.errorDomain) )")
-            
+            print("timeStamp:\(String(describing: record.creationDate))")
         })
+        
+        print(records.getFirstRecord()?.request?.url ?? "")
     }
-    
     
     func getParamsData() -> Data? {
         do {

@@ -26,12 +26,10 @@ class DataStorageManager: DataStorageManagerProtocol {
         let container = NSPersistentContainer(name: DataStorageManager.modelName,
                                               managedObjectModel: DataStorageManager.model)
         container.loadPersistentStores { (storeDescription, error) in
-            
             if let err = error {
                 fatalError("loading failure :\(err.localizedDescription)")
             }
         }
-        
         return container
     }()
     
@@ -42,7 +40,7 @@ class DataStorageManager: DataStorageManagerProtocol {
     
     /// Saves request record given request data and result of API call
     func SaveRequestWith(requestData: RequestData, result: Result<URLSessionResponse, HTTPError>) {
-        managedObjectContext.performAndWait {
+        managedObjectContext.perform {
             self.deleteFirstRecordIfExceededLimit()
             self.creatRequestRecord(requestData: requestData, result: result)
         }
@@ -71,7 +69,7 @@ class DataStorageManager: DataStorageManagerProtocol {
     }
     
     fileprivate func deleteFirstRecord(from records: [RequestRecord]) {
-        if let firstRequest = records.max(by: { return ($0.creationDate ?? Date()) > ($1.creationDate ?? Date())}) {
+        if let firstRequest = records.getFirstRecord() {
             self.managedObjectContext.delete(firstRequest)
         }
         self.save()
@@ -102,7 +100,7 @@ class DataStorageManager: DataStorageManagerProtocol {
         request.setValue(requestData.method, forKey: AttributeKey.method.rawValue)
         request.setValue(requestData.url, forKey: AttributeKey.url.rawValue)
         
-        if let payloadString = requestData.requestPayload?.payloadString {
+        if let payloadString = requestData.requestPayload?.payloadEncodedString {
             request.setValue(payloadString, forKey: AttributeKey.payloadBody.rawValue)
         }
         
@@ -115,18 +113,18 @@ class DataStorageManager: DataStorageManagerProtocol {
                                                            into: managedObjectContext) as! Response
         switch result {
         case .success(let urlResponse):
-            if let httpUrlResponse = urlResponse.response as? HTTPURLResponse {
-                
-                let statusCode = Int16(httpUrlResponse.statusCode)
-                response.setValue(statusCode, forKey: AttributeKey.statusCode.rawValue)
-                
-                let payloadString = urlResponse.data.payloadString
-                response.setValue(payloadString, forKey: AttributeKey.payloadBody.rawValue)
-            }
+            let httpUrlResponse = urlResponse.urlResponse as? HTTPURLResponse
+            
+            let statusCode = Int16(httpUrlResponse?.statusCode ?? 200)
+            response.setValue(statusCode, forKey: AttributeKey.statusCode.rawValue)
+            
+            let payloadString = urlResponse.payloadResponseData.payloadEncodedString
+            response.setValue(payloadString, forKey: AttributeKey.payloadBody.rawValue)
             
         case .failure(let error):
             let errorCode = Int16((error as NSError).code)
             response.setValue(errorCode, forKey: AttributeKey.errorCode.rawValue)
+            
             let errorDomain = (error as NSError).domain
             response.setValue(errorDomain, forKey: AttributeKey.errorDomain.rawValue)
         }
@@ -135,13 +133,12 @@ class DataStorageManager: DataStorageManagerProtocol {
     }
     /// Removes all records from the disk
     func clear() {
-        managedObjectContext.performAndWait { [weak self] in
+        managedObjectContext.perform { [weak self] in
             guard let self = self else {
                 return
             }
             
             self.fetchAllRecords { records in
-                
                 for record in records {
                     self.managedObjectContext.delete(record)
                 }

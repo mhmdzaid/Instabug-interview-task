@@ -1,5 +1,5 @@
 //
-//  TestDataStoreManager.swift
+//  TestableDataStoreManager.swift
 //  InstabugNetworkClientTests
 //
 //  Created by Mohamed Zead on 31/03/2022.
@@ -8,7 +8,7 @@
 import CoreData
 @testable import InstabugNetworkClient
 
-class TestDataStoreManager: DataStorageManager {
+class TestableDataStoreManager: DataStorageManager {
     
     override var recordsLimitNumber: Int {
         return 3
